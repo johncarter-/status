@@ -41,3 +41,4 @@ class SiteUpNotification extends Mailable
     }
 }
 
+

@@ -41,3 +41,4 @@ class SiteDownNotification extends Mailable
     }
 }
 
+
