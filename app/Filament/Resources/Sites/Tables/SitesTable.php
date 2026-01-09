@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\Sites\Tables;
 
+use App\Models\Site;
+use App\Services\SiteCheckerService;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -56,6 +60,32 @@ class SitesTable
                 //
             ])
             ->recordActions([
+                Action::make('check_now')
+                    ->label('Check now')
+                    ->icon('heroicon-m-arrow-path')
+                    ->action(function (Site $record, SiteCheckerService $checker): void {
+                        $updated = $checker->check($record);
+
+                        if ($updated->is_up) {
+                            Notification::make()
+                                ->success()
+                                ->title('Site is up')
+                                ->body("Status: {$updated->status_code}")
+                                ->send();
+
+                            return;
+                        }
+
+                        $reason = filled($updated->status_code)
+                            ? "Status: {$updated->status_code}"
+                            : ($updated->error_message ?? 'Unknown error');
+
+                        Notification::make()
+                            ->danger()
+                            ->title('Site is down')
+                            ->body($reason)
+                            ->send();
+                    }),
                 EditAction::make(),
             ])
             ->toolbarActions([

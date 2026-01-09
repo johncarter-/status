@@ -13,9 +13,6 @@
 </head>
 <body>
 {{ $site->name }} (<a href="{{ $site->address }}">{{ $site->address }}</a>) is currently down.
-
----
-This is an automated notification from your site monitoring system.
 </body>
 </html>
 
