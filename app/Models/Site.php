@@ -9,6 +9,7 @@ class Site extends Model
     protected $fillable = [
         'name',
         'address',
+        'notifications_enabled',
         'is_up',
         'status_code',
         'last_checked_at',
@@ -19,6 +20,7 @@ class Site extends Model
     {
         return [
             'is_up' => 'boolean',
+            'notifications_enabled' => 'boolean',
             'last_checked_at' => 'datetime',
         ];
     }

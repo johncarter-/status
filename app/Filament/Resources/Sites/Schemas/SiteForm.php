@@ -20,6 +20,9 @@ class SiteForm
                     ->url()
                     ->required()
                     ->placeholder('https://example.com'),
+                Toggle::make('notifications_enabled')
+                    ->label('Email notifications')
+                    ->default(true),
                 Toggle::make('is_up')
                     ->disabled()
                     ->dehydrated(false),

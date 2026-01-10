@@ -58,11 +58,19 @@ final class SiteCheckerService
 
     private function sendDownNotification(Site $site): void
     {
+        if (! $site->notifications_enabled) {
+            return;
+        }
+
         Mail::to('john@johncarter.co.uk')->send(new SiteDownNotification($site));
     }
 
     private function sendUpNotification(Site $site): void
     {
+        if (! $site->notifications_enabled) {
+            return;
+        }
+
         Mail::to('john@johncarter.co.uk')->send(new SiteUpNotification($site));
     }
 }

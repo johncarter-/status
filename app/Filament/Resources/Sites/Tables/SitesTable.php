@@ -25,6 +25,10 @@ class SitesTable
                 TextColumn::make('address')
                     ->searchable()
                     ->limit(50),
+                IconColumn::make('notifications_enabled')
+                    ->boolean()
+                    ->label('Notify')
+                    ->sortable(),
                 IconColumn::make('is_up')
                     ->boolean()
                     ->label('Status')
@@ -70,7 +74,7 @@ class SitesTable
                             Notification::make()
                                 ->success()
                                 ->title('Site is up')
-                                ->body("Status: {$updated->status_code}")
+                                ->body("")
                                 ->send();
 
                             return;
@@ -86,7 +90,7 @@ class SitesTable
                             ->body($reason)
                             ->send();
                     }),
-                EditAction::make(),
+                // EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
